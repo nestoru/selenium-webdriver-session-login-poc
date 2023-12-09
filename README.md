@@ -8,7 +8,7 @@ node login-form-server.js
 
 ## Run the test script simulating no saved cookie and again with cookie to confirm it always shows the logged in view
 ```
-rm cookies.json && node automate-user-login.js
+rm -f cookies.json && node automate-user-login.js
 node automate-user-login.js
 cat cookies.json
 ```
@@ -18,6 +18,7 @@ cat cookies.json
 rm cookies.txt && curl -c cookies.txt -d "username=user1&password=password1" http://localhost:3000/login
 curl -b cookies.txt http://localhost:3000
 cat cookies.txt
+rm cookies
 ```
 
 ## Use it in external unprotected form authentication websites
