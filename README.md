@@ -1,9 +1,36 @@
-## NodeJS Selenium Webdriver Session Login POC
-This POC shows how Selenium Webdriver can be used to login to a web app, save the session in a local file and login again just using the cookie.
+## NodeJS Selenium Webdriver Session Login with TOTP POC
+This POC shows how Selenium Webdriver can be used to login to a web app asking for TOTP in a second page, save the session in a local file and login again just using the cookie.
 
-## Start the sample server
+## Finding the TOTP secret key
+If you only have the QR code you can scan it to get the key by taking a picture of it and processing it with zbarimg
+```
+sudo apt-get install zbar-tools
+zbarimg ~/totp.jpeg 
+```
+
+## Install
+```
+git clone https://github.com/nestoru/selenium-webdriver-session-login-poc.git
+cd selenium-webdriver-session-login-poc
+npm install
+```
+
+## Start the sample server (TODO: Add TOTP second page)
 ```
 node login-form-server.js 
+```
+## Setup env vars (replace with proper vars as the below values are only provided as example
+```
+export SITE_LOGIN_URL='' && \
+export SITE_LOGGED_URL='' && \
+export SITE_USER_FIELD='email-form-field' && \
+export SITE_USER_VALUE='' && \
+export SITE_PASSWORD_FIELD='password-form-field' && \
+export SITE_PASSWORD_VALUE='' && \
+export SITE_TOTP_FIELD='one-time password' && \
+export SITE_TOTP_KEY='' && \
+export LOGIN_XPATH_SELECTOR="//form/div/div[1]/div/div[5]/button" && \
+export TOTP_SUBMIT_XPATH_SELECTOR="//button"
 ```
 
 ## Run the test script simulating no saved cookie and again with cookie to confirm it always shows the logged in view
@@ -21,14 +48,3 @@ cat cookies.txt
 rm cookies
 ```
 
-## Use it in external unprotected form authentication websites
-```
-export SITE_URL=''; \
-export SITE_USER_FIELD=''; \
-export SITE_PASSWORD_FIELD=''; \
-export SITE_USER_VALUE=''; \
-export SITE_PASSWORD_VALUE=''; \
-export COOKIES_FILE_PATH=''; \
-export LOGIN_CSS_SELECTOR=''; \
-node automate-user-login.js
-```
